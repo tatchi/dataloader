@@ -65,12 +65,7 @@ const stats: Stats[] = [
 	})),
 ];
 
-export const makeDb = ({ enableLog }: { enableLog: boolean }) => {
-	const log: Console['log'] = (msg) => {
-		if (!enableLog) return;
-		console.log(msg);
-	};
-
+export const makeDb = ({ log }: { log: Console['log'] }) => {
 	const getUserById = async (id: string): Promise<User> => {
 		log(`getUserById ${id}`);
 		await wait(200);

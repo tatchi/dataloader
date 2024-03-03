@@ -1,11 +1,18 @@
-import { expect, test, describe, spyOn } from 'bun:test';
+import { expect, test, describe, spyOn, afterEach } from 'bun:test';
 import DataLoader from 'dataloader';
 import { makeLoader } from '~/dataloader';
 import { makeDb, toUserId, users, type Post, type Stats } from '~/db';
 
 describe('dataloader', () => {
+	let logs: string[] = [];
+	let log: Console['log'];
+	log = (msg) => logs.push(msg);
+	afterEach(() => {
+		logs = [];
+	});
+
 	test('getUserByIds', async () => {
-		const db = makeDb({ enableLog: false });
+		const db = makeDb({ log });
 
 		const spy = spyOn(db, 'getUserByIds');
 
@@ -21,9 +28,11 @@ describe('dataloader', () => {
 		expect(spy).toHaveBeenCalledWith(ids);
 
 		expect(result).toEqual(users);
+
+		expect(logs).toMatchSnapshot();
 	});
 	test('buildPostsSummary serial', async () => {
-		const db = makeDb({ enableLog: true });
+		const db = makeDb({ log });
 
 		const spyGetPosts = spyOn(db, 'getPosts');
 		const spyGetUserById = spyOn(db, 'getUserById');
@@ -58,9 +67,11 @@ describe('dataloader', () => {
 		expect(spyGetUserById).toHaveBeenCalledTimes(15);
 		expect(spyGetStatsById).toHaveBeenCalledTimes(15);
 		expect(spyGetFunFact).toHaveBeenCalledTimes(15);
+
+		expect(logs).toMatchSnapshot();
 	});
 	test('buildPostsSummary parallel', async () => {
-		const db = makeDb({ enableLog: true });
+		const db = makeDb({ log });
 
 		const spyGetPosts = spyOn(db, 'getPosts');
 		const spyGetUserById = spyOn(db, 'getUserById');
@@ -106,9 +117,11 @@ describe('dataloader', () => {
 		expect(spyGetUserById).toHaveBeenCalledTimes(15);
 		expect(spyGetStatsById).toHaveBeenCalledTimes(15);
 		expect(spyGetFunFact).toHaveBeenCalledTimes(15);
+
+		expect(logs).toMatchSnapshot();
 	});
 	test('buildPostsSummary with own datalader (no cache)', async () => {
-		const db = makeDb({ enableLog: true });
+		const db = makeDb({ log });
 
 		const spyGetPosts = spyOn(db, 'getPosts');
 		const spyGetUserById = spyOn(db, 'getUserById');
@@ -166,9 +179,11 @@ describe('dataloader', () => {
 		expect(spyGetUserById).toHaveBeenCalledTimes(0);
 		expect(spyGetStatsById).toHaveBeenCalledTimes(0);
 		expect(spyGetFunFact).toHaveBeenCalledTimes(0);
+
+		expect(logs).toMatchSnapshot();
 	});
 	test('buildPostsSummary datalader lib (cache)', async () => {
-		const db = makeDb({ enableLog: true });
+		const db = makeDb({ log });
 
 		const spyGetPosts = spyOn(db, 'getPosts');
 		const spyGetUserById = spyOn(db, 'getUserById');
@@ -226,5 +241,7 @@ describe('dataloader', () => {
 		expect(spyGetUserById).toHaveBeenCalledTimes(0);
 		expect(spyGetStatsById).toHaveBeenCalledTimes(0);
 		expect(spyGetFunFact).toHaveBeenCalledTimes(0);
+
+		expect(logs).toMatchSnapshot();
 	});
 });

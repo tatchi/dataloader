@@ -1,0 +1,127 @@
+// Bun Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`dataloader getUserByIds 1`] = `
+[
+  "getUserByIds [user:1, user:2, user:3, user:4, user:5]",
+]
+`;
+
+exports[`dataloader buildPostsSummary serial 1`] = `
+[
+  "getPosts",
+  "getUserById user:1",
+  "getStatsById stats:1",
+  "getFunFact 1",
+  "getUserById user:1",
+  "getStatsById stats:2",
+  "getFunFact 2",
+  "getUserById user:1",
+  "getStatsById stats:3",
+  "getFunFact 3",
+  "getUserById user:1",
+  "getStatsById stats:4",
+  "getFunFact 4",
+  "getUserById user:1",
+  "getStatsById stats:5",
+  "getFunFact 5",
+  "getUserById user:2",
+  "getStatsById stats:6",
+  "getFunFact 6",
+  "getUserById user:2",
+  "getStatsById stats:7",
+  "getFunFact 7",
+  "getUserById user:2",
+  "getStatsById stats:8",
+  "getFunFact 8",
+  "getUserById user:2",
+  "getStatsById stats:9",
+  "getFunFact 9",
+  "getUserById user:2",
+  "getStatsById stats:10",
+  "getFunFact 10",
+  "getUserById user:3",
+  "getStatsById stats:11",
+  "getFunFact 11",
+  "getUserById user:3",
+  "getStatsById stats:12",
+  "getFunFact 12",
+  "getUserById user:3",
+  "getStatsById stats:13",
+  "getFunFact 13",
+  "getUserById user:3",
+  "getStatsById stats:14",
+  "getFunFact 14",
+  "getUserById user:3",
+  "getStatsById stats:15",
+  "getFunFact 15",
+]
+`;
+
+exports[`dataloader buildPostsSummary parallel 1`] = `
+[
+  "getPosts",
+  "getUserById user:1",
+  "getStatsById stats:1",
+  "getUserById user:1",
+  "getStatsById stats:2",
+  "getUserById user:1",
+  "getStatsById stats:3",
+  "getUserById user:1",
+  "getStatsById stats:4",
+  "getUserById user:1",
+  "getStatsById stats:5",
+  "getUserById user:2",
+  "getStatsById stats:6",
+  "getUserById user:2",
+  "getStatsById stats:7",
+  "getUserById user:2",
+  "getStatsById stats:8",
+  "getUserById user:2",
+  "getStatsById stats:9",
+  "getUserById user:2",
+  "getStatsById stats:10",
+  "getUserById user:3",
+  "getStatsById stats:11",
+  "getUserById user:3",
+  "getStatsById stats:12",
+  "getUserById user:3",
+  "getStatsById stats:13",
+  "getUserById user:3",
+  "getStatsById stats:14",
+  "getUserById user:3",
+  "getStatsById stats:15",
+  "getFunFact 1",
+  "getFunFact 2",
+  "getFunFact 3",
+  "getFunFact 4",
+  "getFunFact 5",
+  "getFunFact 6",
+  "getFunFact 7",
+  "getFunFact 8",
+  "getFunFact 9",
+  "getFunFact 10",
+  "getFunFact 11",
+  "getFunFact 12",
+  "getFunFact 13",
+  "getFunFact 14",
+  "getFunFact 15",
+]
+`;
+
+exports[`dataloader buildPostsSummary with own datalader (no cache) 1`] = `
+[
+  "getPosts",
+  "getUserByIds [user:1, user:1, user:1, user:1, user:1, user:2, user:2, user:2, user:2, user:2, user:3, user:3, user:3, user:3, user:3]",
+  "getStatsByIds [stats:1, stats:1, stats:2, stats:2, stats:3, stats:3, stats:4, stats:4, stats:5, stats:5, stats:6, stats:6, stats:7, stats:7, stats:8, stats:8, stats:9, stats:9, stats:10, stats:10, stats:11, stats:11, stats:12, stats:12, stats:13, stats:13, stats:14, stats:14, stats:15, stats:15]",
+  "getFunFacts [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]",
+]
+`;
+
+exports[`dataloader buildPostsSummary datalader lib (cache) 1`] = `
+[
+  "getPosts",
+  "getUserByIds [user:1, user:2, user:3]",
+  "getStatsByIds [stats:1, stats:2, stats:3, stats:4, stats:5, stats:6, stats:7, stats:8, stats:9, stats:10, stats:11, stats:12, stats:13, stats:14, stats:15]",
+  "getFunFacts [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]",
+]
+`;
