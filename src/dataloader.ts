@@ -1,5 +1,5 @@
-export let makeLoader = <T>(batch: (keys: number[]) => Promise<T[]>) => {
-	let _pending: [number, (value: T) => void][] = [];
+export let makeLoader = <K, T>(batch: (keys: K[]) => Promise<T[]>) => {
+	let _pending: [K, (value: T) => void][] = [];
 	let isRunnig = false;
 
 	const reset = () => {
@@ -22,7 +22,7 @@ export let makeLoader = <T>(batch: (keys: number[]) => Promise<T[]>) => {
 		}, 0);
 	};
 
-	const load = async (k: number): Promise<T> => {
+	const load = async (k: K): Promise<T> => {
 		const promise = new Promise((r) => {
 			_pending.push([k, r]);
 		});
