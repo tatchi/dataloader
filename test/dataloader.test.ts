@@ -104,4 +104,58 @@ describe('dataloader', () => {
 		expect(spyGetStatsById).toHaveBeenCalledTimes(15);
 		expect(spyGetFunFact).toHaveBeenCalledTimes(15);
 	});
+	test('buildPostsSummary best solution', async () => {
+		const db = makeDb({ enableLog: true });
+
+		const spyGetPosts = spyOn(db, 'getPosts');
+		const spyGetUserById = spyOn(db, 'getUserById');
+		const spyGetStatsById = spyOn(db, 'getStatsById');
+		const spyGetFunFact = spyOn(db, 'getFunFact');
+
+		const userLoader = makeLoader((ids: string[]) => db.getUserByIds(ids));
+		const statsLoader = makeLoader((ids: string[]) => db.getStatsByIds(ids));
+		const funFactLoader = makeLoader((ns: number[]) => db.getFunFacts(ns));
+
+		async function buildPostsSummary() {
+			let posts = await db.getPosts();
+			let summary = Promise.all(posts.map((post) => buildPostSummary(post)));
+			return summary;
+		}
+
+		async function buildPostSummary(post: Post) {
+			async function fetchAuthorName() {
+				let author = await userLoader.load(post.authorId);
+				return author.name;
+			}
+
+			async function fetchViewCount() {
+				let stats = await statsLoader.load(post.statsId);
+				return stats.viewCount;
+			}
+
+			async function fetchViewCountFunFact() {
+				let stats = await statsLoader.load(post.statsId);
+				return stats.viewCount > 0
+					? funFactLoader.load(stats.viewCount)
+					: undefined;
+			}
+
+			let [authorName, viewCount, funFact] = await Promise.all([
+				fetchAuthorName(),
+				fetchViewCount(),
+				fetchViewCountFunFact(),
+			]);
+
+			return { title: post.title, authorName, viewCount, funFact };
+		}
+
+		console.time('buildPostsSummary');
+		await buildPostsSummary();
+		console.timeEnd('buildPostsSummary');
+
+		expect(spyGetPosts).toHaveBeenCalledTimes(1);
+		expect(spyGetUserById).toHaveBeenCalledTimes(0);
+		expect(spyGetStatsById).toHaveBeenCalledTimes(0);
+		expect(spyGetFunFact).toHaveBeenCalledTimes(0);
+	});
 });
