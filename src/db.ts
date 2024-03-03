@@ -77,7 +77,7 @@ export const makeDb = ({ enableLog }: { enableLog: boolean }) => {
 		return users.find((u) => u.id === id)!;
 	};
 
-	const getUserByIds = async (ids: string[]): Promise<User[]> => {
+	const getUserByIds = async (ids: readonly string[]): Promise<User[]> => {
 		log(`getUserByIds [${ids.join(', ')}]`);
 		await wait(200);
 		// log(`SELECT * FROM USERS WHERE id in [${ids.join(',')}]`);
@@ -90,7 +90,7 @@ export const makeDb = ({ enableLog }: { enableLog: boolean }) => {
 		return stats.find((st) => st.id === id)!;
 	};
 
-	const getStatsByIds = async (ids: string[]): Promise<Stats[]> => {
+	const getStatsByIds = async (ids: readonly string[]): Promise<Stats[]> => {
 		log(`getStatsByIds [${ids.join(', ')}]`);
 		await wait(200);
 		return ids.map((id) => stats.find((st) => st.id === id)!);
@@ -104,11 +104,13 @@ export const makeDb = ({ enableLog }: { enableLog: boolean }) => {
 	};
 
 	const getFunFact = async (n: number): Promise<string> => {
+		log(`getFunFact ${n}`);
 		wait(200);
 		return `Funfatch for viewcount = ${n}`;
 	};
 
-	const getFunFacts = async (n: number[]): Promise<string[]> => {
+	const getFunFacts = async (n: readonly number[]): Promise<string[]> => {
+		log(`getFunFacts [${n.join(', ')}]`);
 		wait(200);
 		return n.map((n) => `Funfatch for viewcount = ${n}`);
 	};

@@ -1,7 +1,10 @@
 {
-	"devDependencies": {
-		"@types/bun": "^1.0.8",
-		"tsx": "^4.7.1",
-		"typescript": "^5.3.3"
-	}
+  "devDependencies": {
+    "@types/bun": "^1.0.8",
+    "tsx": "^4.7.1",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "dataloader": "^2.2.2"
+  }
 }
