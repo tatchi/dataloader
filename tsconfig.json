@@ -28,12 +28,7 @@
 		"verbatimModuleSyntax": true,
 		"paths": {
 			"~/*": ["./src/*"]
-		},
-		"plugins": [
-			{
-				"name": "@effect/language-service"
-			}
-		]
+		}
 	},
 	"exclude": ["node_modules", "dist"],
 	"include": ["**/*.ts", "**/*.tsx"]
