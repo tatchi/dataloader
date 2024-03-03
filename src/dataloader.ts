@@ -9,7 +9,7 @@ export let makeLoader = <K, T>(batch: (keys: K[]) => Promise<T[]>) => {
 
 	let run = () => {
 		isRunnig = true;
-		setTimeout(async () => {
+		setImmediate(async () => {
 			let pending = _pending;
 			reset();
 			let keys = pending.map(([k, _]) => k);
@@ -19,7 +19,7 @@ export let makeLoader = <K, T>(batch: (keys: K[]) => Promise<T[]>) => {
 				const [_, resolve] = pending[i]!;
 				resolve(user);
 			});
-		}, 0);
+		});
 	};
 
 	const load = async (k: K): Promise<T> => {
